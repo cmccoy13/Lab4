@@ -12,11 +12,6 @@ void main()
 {
 	color = vCol;
 
-	/*if(gl_FragCoord.y > WindowHeight/2)
-	{
-		discard;
-	}*/
-
 	float dist = distance(gl_FragCoord, Center);
 	
 	if(dist < 20)
@@ -25,6 +20,6 @@ void main()
 	}
 	else
 	{
-
+		color += dist/250;
 	}
 }
