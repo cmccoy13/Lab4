@@ -155,6 +155,9 @@ public:
 		prog->addUniform("V");
 		prog->addUniform("M");
 		prog->addUniform("Click");
+		prog->addUniform("WindowHeight");
+		prog->addUniform("WindowWidth");
+		prog->addUniform("Center");
 		prog->addAttribute("vertPos");
 	}
 
@@ -195,6 +198,9 @@ public:
 		glUniformMatrix4fv(prog->getUniform("V"), 1, GL_FALSE, &V[0][0]);
 		glUniformMatrix4fv(prog->getUniform("M"), 1, GL_FALSE, &M[0][0]);
 		glUniform3f(prog->getUniform("Click"), p2wX(posX), p2wY(posY), 1);
+		glUniform1i(prog->getUniform("WindowHeight"), height);
+		glUniform1i(prog->getUniform("WindowWidth"), width);
+		glUniform4f(prog->getUniform("Center"), (((width)*((sin(glfwGetTime())+1)/2))+(width/2))/2, (((height)*((cos(glfwGetTime()) + 1) / 2)) + (height / 2)) / 2, 0, 0);
 
 		glBindVertexArray(VertexArrayID);
 
