@@ -47,12 +47,12 @@ public:
 	// written
 	void mouseCallback(GLFWwindow *window, int button, int action, int mods)
 	{
-		
+
 		float newPt[2];
 		if (action == GLFW_PRESS)
 		{
 			glfwGetCursorPos(window, &posX, &posY);
-			std::cout << "Pos X " << posX <<  " Pos Y " << posY << std::endl;
+			std::cout << "Pos X " << posX << " Pos Y " << posY << std::endl;
 
 			//change this to be the points converted to WORLD
 			//THIS IS BROKEN< YOU GET TO FIX IT - yay!
@@ -62,7 +62,7 @@ public:
 			std::cout << "converted:" << newPt[0] << " " << newPt[1] << std::endl;
 			glBindBuffer(GL_ARRAY_BUFFER, VertexBufferID);
 			//update the vertex array with the updated points
-			glBufferSubData(GL_ARRAY_BUFFER, sizeof(float)*6, sizeof(float)*2, newPt);
+			glBufferSubData(GL_ARRAY_BUFFER, sizeof(float) * 6, sizeof(float) * 2, newPt);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 	}
@@ -91,7 +91,7 @@ public:
 		static const GLfloat g_vertex_buffer_data[] =
 		{
 			-0.9f, -0.9f, 0.0f, //T1
-			0.9f, -0.9f, 0.0f, 
+			0.9f, -0.9f, 0.0f,
 			0.0f, 0.9f, 1.0f,
 			-1.0f, -0.9f, 0.0f, //T2
 			-1.0f, 0.9f, 0.0f,
@@ -115,7 +115,7 @@ public:
 		static const GLfloat g_vertex_buffer_color[] =
 		{
 			0, 1, 0, //T1
-			1, 1, 0, 
+			1, 1, 0,
 			0, 0, 1,
 			1, 0, 0, //T1
 			0, 0, 1,
@@ -130,7 +130,7 @@ public:
 		//we need to set up the vertex array
 		glEnableVertexAttribArray(1);
 		//key function to get up how many elements to pull out at a time (3)
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) 0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		glBindVertexArray(0);
 
@@ -142,7 +142,7 @@ public:
 		GLSL::checkVersion();
 
 		// Set background color.
-		glClearColor(0.9f, 0.2f, 0.0f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		// Enable z-buffer test.
 		glEnable(GL_DEPTH_TEST);
 
@@ -172,24 +172,24 @@ public:
 		// Get current frame buffer size.
 		int width, height;
 		glfwGetFramebufferSize(windowManager->getHandle(), &width, &height);
-		float aspect = width/(float)height;
+		float aspect = width / (float)height;
 		glViewport(0, 0, width, height);
 
 		// Clear framebuffer.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Create the matrix stacks - please leave these alone for now
-		
+
 		glm::mat4 V, M, PP;
 		V = glm::mat4(1);
 		M = glm::mat4(1);
 		// Apply orthographic projection.
-		PP = glm::ortho(-1 * aspect, 1 * aspect, -1.0f, 1.0f, -2.0f, 100.0f);		
+		PP = glm::ortho(-1 * aspect, 1 * aspect, -1.0f, 1.0f, -2.0f, 100.0f);
 		if (width < height)
 		{
-		PP = glm::ortho(-1.0f, 1.0f, -1.0f / aspect,  1.0f / aspect, -2.0f, 100.0f);
+			PP = glm::ortho(-1.0f, 1.0f, -1.0f / aspect, 1.0f / aspect, -2.0f, 100.0f);
 		}
-	
+
 		// Draw the triangle using GLSL.
 		prog->bind();
 
@@ -200,7 +200,7 @@ public:
 		glUniform3f(prog->getUniform("Click"), p2wX(posX), p2wY(posY), 1);
 		glUniform1i(prog->getUniform("WindowHeight"), height);
 		glUniform1i(prog->getUniform("WindowWidth"), width);
-		glUniform4f(prog->getUniform("Center"), (((width)*((sin(glfwGetTime())+1)/2))+(width/2))/2, (((height)*((cos(glfwGetTime()) + 1) / 2)) + (height / 2)) / 2, 0, 0);
+		glUniform4f(prog->getUniform("Center"), (((width)*((sin(glfwGetTime()) + 1) / 2)) + (width / 2)) / 2, (((height)*((cos(glfwGetTime()) + 1) / 2)) + (height / 2)) / 2, 0, 0);
 
 		glBindVertexArray(VertexArrayID);
 
@@ -235,20 +235,20 @@ int main(int argc, char **argv)
 	Application *application = new Application();
 
 	/* your main will always include a similar set up to establish your window
-		and GL context, etc. */
+	and GL context, etc. */
 	WindowManager * windowManager = new WindowManager();
 	windowManager->init(640, 480);
 	windowManager->setEventCallbacks(application);
 	application->windowManager = windowManager;
 
 	/* This is the code that will likely change program to program as you
-		may need to initialize or set up different data and state */
+	may need to initialize or set up different data and state */
 	// Initialize scene.
 	application->init(resourceDir);
 	application->initGeom();
 
 	// Loop until the user closes the window.
-	while(! glfwWindowShouldClose(windowManager->getHandle()))
+	while (!glfwWindowShouldClose(windowManager->getHandle()))
 	{
 		// Render scene.
 		application->render();
